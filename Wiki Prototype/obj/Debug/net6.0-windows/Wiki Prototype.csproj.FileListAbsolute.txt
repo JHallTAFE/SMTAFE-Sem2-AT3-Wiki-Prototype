@@ -3,7 +3,6 @@ G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\bin\Debug\n
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\bin\Debug\net6.0-windows\Wiki Prototype.runtimeconfig.json
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\bin\Debug\net6.0-windows\Wiki Prototype.dll
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\bin\Debug\net6.0-windows\Wiki Prototype.pdb
-G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki_Prototype.Form1.resources
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki Prototype.csproj.GenerateResource.cache
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki Prototype.GeneratedMSBuildEditorConfig.editorconfig
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki Prototype.AssemblyInfoInputs.cache
@@ -14,3 +13,4 @@ G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\n
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki Prototype.pdb
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki Prototype.genruntimeconfig.cache
 G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\ref\Wiki Prototype.dll
+G:\Semester 2\C#\Repos\SMTAFE-Sem2-AT3-Wiki-Prototype\Wiki Prototype\obj\Debug\net6.0-windows\Wiki_Prototype.WikiPrototype.resources
