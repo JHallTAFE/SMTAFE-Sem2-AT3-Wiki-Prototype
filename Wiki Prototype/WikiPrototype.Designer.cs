@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             ToolTip = new ToolTip(components);
             StatusStrip = new StatusStrip();
+            StatusBar = new ToolStripStatusLabel();
             ButtonLoad = new Button();
             ButtonSave = new Button();
             TextBoxSearch = new TextBox();
@@ -50,15 +51,22 @@
             ColumnName = new ColumnHeader();
             ColumnCategory = new ColumnHeader();
             ColumnStructure = new ColumnHeader();
+            StatusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // StatusStrip
             // 
+            StatusStrip.Items.AddRange(new ToolStripItem[] { StatusBar });
             StatusStrip.Location = new Point(0, 389);
             StatusStrip.Name = "StatusStrip";
             StatusStrip.Size = new Size(784, 22);
             StatusStrip.TabIndex = 1;
             StatusStrip.Text = "statusStrip1";
+            // 
+            // StatusBar
+            // 
+            StatusBar.Name = "StatusBar";
+            StatusBar.Size = new Size(0, 17);
             // 
             // ButtonLoad
             // 
@@ -100,6 +108,7 @@
             TextBoxName.Name = "TextBoxName";
             TextBoxName.Size = new Size(100, 23);
             TextBoxName.TabIndex = 6;
+            TextBoxName.MouseDoubleClick += TextBoxName_MouseDoubleClick;
             // 
             // TextBoxCategory
             // 
@@ -177,6 +186,7 @@
             ButtonEdit.TabIndex = 15;
             ButtonEdit.Text = "EDIT";
             ButtonEdit.UseVisualStyleBackColor = true;
+            ButtonEdit.Click += ButtonEdit_Click;
             // 
             // ButtonDelete
             // 
@@ -190,24 +200,32 @@
             // ListViewWiki
             // 
             ListViewWiki.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnCategory, ColumnStructure });
+            ListViewWiki.FullRowSelect = true;
+            ListViewWiki.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             ListViewWiki.Location = new Point(355, 41);
+            ListViewWiki.MultiSelect = false;
             ListViewWiki.Name = "ListViewWiki";
             ListViewWiki.Size = new Size(286, 204);
             ListViewWiki.TabIndex = 17;
             ListViewWiki.UseCompatibleStateImageBehavior = false;
             ListViewWiki.View = View.Details;
+            ListViewWiki.SelectedIndexChanged += ListViewWiki_SelectedIndexChanged;
+            ListViewWiki.Click += ListViewWiki_Click;
             // 
             // ColumnName
             // 
             ColumnName.Text = "Name";
+            ColumnName.Width = 122;
             // 
             // ColumnCategory
             // 
             ColumnCategory.Text = "Category";
+            ColumnCategory.Width = 80;
             // 
             // ColumnStructure
             // 
             ColumnStructure.Text = "Structure";
+            ColumnStructure.Width = 80;
             // 
             // WikiPrototype
             // 
@@ -236,6 +254,8 @@
             Name = "WikiPrototype";
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "WikiPrototype";
+            StatusStrip.ResumeLayout(false);
+            StatusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -263,5 +283,6 @@
         private ColumnHeader ColumnName;
         private ColumnHeader ColumnCategory;
         private ColumnHeader ColumnStructure;
+        private ToolStripStatusLabel StatusBar;
     }
 }
