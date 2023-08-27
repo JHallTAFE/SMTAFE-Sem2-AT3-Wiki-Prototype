@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             ToolTip = new ToolTip(components);
-            ListBoxWiki = new ListBox();
             StatusStrip = new StatusStrip();
             ButtonLoad = new Button();
             ButtonSave = new Button();
@@ -47,23 +46,17 @@
             ButtonAdd = new Button();
             ButtonEdit = new Button();
             ButtonDelete = new Button();
+            ListViewWiki = new ListView();
+            ColumnName = new ColumnHeader();
+            ColumnCategory = new ColumnHeader();
+            ColumnStructure = new ColumnHeader();
             SuspendLayout();
-            // 
-            // ListBoxWiki
-            // 
-            ListBoxWiki.FormattingEnabled = true;
-            ListBoxWiki.ItemHeight = 15;
-            ListBoxWiki.Location = new Point(355, 46);
-            ListBoxWiki.MultiColumn = true;
-            ListBoxWiki.Name = "ListBoxWiki";
-            ListBoxWiki.Size = new Size(217, 199);
-            ListBoxWiki.TabIndex = 0;
             // 
             // StatusStrip
             // 
-            StatusStrip.Location = new Point(0, 277);
+            StatusStrip.Location = new Point(0, 389);
             StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new Size(584, 22);
+            StatusStrip.Size = new Size(784, 22);
             StatusStrip.TabIndex = 1;
             StatusStrip.Text = "statusStrip1";
             // 
@@ -174,6 +167,7 @@
             ButtonAdd.TabIndex = 14;
             ButtonAdd.Text = "ADD";
             ButtonAdd.UseVisualStyleBackColor = true;
+            ButtonAdd.Click += ButtonAdd_Click;
             // 
             // ButtonEdit
             // 
@@ -193,11 +187,34 @@
             ButtonDelete.Text = "DELETE";
             ButtonDelete.UseVisualStyleBackColor = true;
             // 
+            // ListViewWiki
+            // 
+            ListViewWiki.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnCategory, ColumnStructure });
+            ListViewWiki.Location = new Point(355, 41);
+            ListViewWiki.Name = "ListViewWiki";
+            ListViewWiki.Size = new Size(286, 204);
+            ListViewWiki.TabIndex = 17;
+            ListViewWiki.UseCompatibleStateImageBehavior = false;
+            ListViewWiki.View = View.Details;
+            // 
+            // ColumnName
+            // 
+            ColumnName.Text = "Name";
+            // 
+            // ColumnCategory
+            // 
+            ColumnCategory.Text = "Category";
+            // 
+            // ColumnStructure
+            // 
+            ColumnStructure.Text = "Structure";
+            // 
             // WikiPrototype
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(584, 299);
+            ClientSize = new Size(784, 411);
+            Controls.Add(ListViewWiki);
             Controls.Add(ButtonDelete);
             Controls.Add(ButtonEdit);
             Controls.Add(ButtonAdd);
@@ -214,7 +231,6 @@
             Controls.Add(ButtonSave);
             Controls.Add(ButtonLoad);
             Controls.Add(StatusStrip);
-            Controls.Add(ListBoxWiki);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "WikiPrototype";
@@ -227,7 +243,6 @@
         #endregion
 
         private ToolTip ToolTip;
-        private ListBox ListBoxWiki;
         private StatusStrip StatusStrip;
         private Button ButtonLoad;
         private Button ButtonSave;
@@ -244,5 +259,9 @@
         private Button ButtonAdd;
         private Button ButtonEdit;
         private Button ButtonDelete;
+        private ListView ListViewWiki;
+        private ColumnHeader ColumnName;
+        private ColumnHeader ColumnCategory;
+        private ColumnHeader ColumnStructure;
     }
 }
