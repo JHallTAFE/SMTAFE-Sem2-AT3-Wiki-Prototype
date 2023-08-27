@@ -1,3 +1,5 @@
+using System.Diagnostics.Eventing.Reader;
+
 namespace Wiki_Prototype
 {
     public partial class WikiPrototype : Form
@@ -7,10 +9,27 @@ namespace Wiki_Prototype
         string[,] recordArray = new string[rowSize, colSize];
         int wikiPointer = 0; // Points to the last 'empty' entry
         int selectPointer = -1; // The last selected item in the ListView
+        #region demo array
+        bool demoLoaded = false;
+        bool demoEnabled = true;
+        string[,] demoArray =
+        {
+            {"Array", "Array", "Linear", "An Array." },
+            {"Two Dimension Array", "Array", "Linear", "A two-dimensional array." },
+            {"List", "List", "Linear", "A list." },
+            {"Linked List", "List", "Linear", "A linked list." },
+            {"Self-Balance Tree", "Tree", "Non-Linear", "A self-balance tree" },
+            {"Heap", "Tree", "Non-Linear", "A heap." }
+        };
+        #endregion
         public WikiPrototype()
         {
             InitializeComponent();
             ButtonSave.Enabled = false;
+            if (demoEnabled)
+            {
+                ButtonDemo.Visible = true;
+            }
             for (int i = 0; i < rowSize; i++)
             {
                 for (int j = 0; j < colSize; j++)
@@ -69,8 +88,33 @@ namespace Wiki_Prototype
             TextBoxStructure.Clear();
             TextBoxDefinition.Clear();
         }
+        /// <summary>
+        /// Asks the user if they want to delete the given entry; deletes it if the user confirms.
+        /// </summary>
+        /// <param name="i">The row in the array to delete</param>
+        private void DeleteEntry(int i)
+        {
+            if (MessageBox.Show("Do you wish to delete the entry " + recordArray[i, 0] + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                for (int j = i; j < wikiPointer; j++) // From the given row to the last filled row
+                {
+                    for (int k = 0; k < 4; k++) // For each element in the row
+                    {
+                        recordArray[j, k] = recordArray[j + 1, k]; // Replace the given row with the next row
+                    }
+                }
+                for (int j = 0; j < 4; j++)
+                {
+                    recordArray[wikiPointer, j] = "~"; // Fill the last row (now duplicated) with empty results
+                }
+                wikiPointer--; // Shift pointer back up the list
+                DisplayWiki();
+                ClearBoxes();
+            }
+        }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+            //TO DO: Check if pointer points out of the array
             recordArray[wikiPointer, 0] = TextBoxName.Text;
             recordArray[wikiPointer, 1] = TextBoxCategory.Text;
             recordArray[wikiPointer, 2] = TextBoxStructure.Text;
@@ -112,6 +156,51 @@ namespace Wiki_Prototype
             ClearBoxes();
             TextBoxName.Focus();
             selectPointer = -1;
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (selectPointer >= 0)
+            {
+                DeleteEntry(selectPointer);
+            }
+        }
+
+        private void ButtonDemo_Click(object sender, EventArgs e)
+        {
+            if (demoLoaded == false)
+            {
+                for (int i = 0; i < demoArray.GetLength(0) - 1; i++)
+                {
+                    recordArray[wikiPointer, 0] = demoArray[i, 0];
+                    recordArray[wikiPointer, 1] = demoArray[i, 1];
+                    recordArray[wikiPointer, 2] = demoArray[i, 2];
+                    recordArray[wikiPointer, 3] = demoArray[i, 3];
+                    wikiPointer++;
+                }
+                for (int i = demoArray.GetLength(0); i < rowSize; i++)
+                {
+                    recordArray[wikiPointer, 0] = "~";
+                    recordArray[wikiPointer, 1] = "~";
+                    recordArray[wikiPointer, 2] = "~";
+                    recordArray[wikiPointer, 3] = "~";
+                }
+                ButtonDemo.Enabled = false;
+                demoLoaded = true;
+                DisplayWiki();
+            }
+            else
+            {
+                StatusBar.Text = "Demo alreadyloaded!";
+            }
+        }
+
+        private void ListViewWiki_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (selectPointer >= 0)
+            {
+                DeleteEntry(selectPointer);
+            }
         }
     }
 }

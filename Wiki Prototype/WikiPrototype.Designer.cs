@@ -51,6 +51,7 @@
             ColumnName = new ColumnHeader();
             ColumnCategory = new ColumnHeader();
             ColumnStructure = new ColumnHeader();
+            ButtonDemo = new Button();
             StatusStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -196,6 +197,7 @@
             ButtonDelete.TabIndex = 16;
             ButtonDelete.Text = "DELETE";
             ButtonDelete.UseVisualStyleBackColor = true;
+            ButtonDelete.Click += ButtonDelete_Click;
             // 
             // ListViewWiki
             // 
@@ -211,6 +213,7 @@
             ListViewWiki.View = View.Details;
             ListViewWiki.SelectedIndexChanged += ListViewWiki_SelectedIndexChanged;
             ListViewWiki.Click += ListViewWiki_Click;
+            ListViewWiki.MouseDoubleClick += ListViewWiki_MouseDoubleClick;
             // 
             // ColumnName
             // 
@@ -227,11 +230,22 @@
             ColumnStructure.Text = "Structure";
             ColumnStructure.Width = 80;
             // 
+            // ButtonDemo
+            // 
+            ButtonDemo.Location = new Point(566, 251);
+            ButtonDemo.Name = "ButtonDemo";
+            ButtonDemo.Size = new Size(75, 23);
+            ButtonDemo.TabIndex = 18;
+            ButtonDemo.Text = "Demo";
+            ButtonDemo.UseVisualStyleBackColor = true;
+            ButtonDemo.Click += ButtonDemo_Click;
+            // 
             // WikiPrototype
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 411);
+            Controls.Add(ButtonDemo);
             Controls.Add(ListViewWiki);
             Controls.Add(ButtonDelete);
             Controls.Add(ButtonEdit);
@@ -284,5 +298,6 @@
         private ColumnHeader ColumnCategory;
         private ColumnHeader ColumnStructure;
         private ToolStripStatusLabel StatusBar;
+        private Button ButtonDemo;
     }
 }
