@@ -111,13 +111,18 @@ namespace Wiki_Prototype
                 }
                 for (int j = 0; j < 4; j++)
                 {
-                    recordArray[wikiPointer, j] = "~"; // Fill the last row (now duplicated) with empty results
+                    recordArray[wikiPointer - 1, j] = "~"; // Fill the last row (now duplicated) with empty results
                 }
                 wikiPointer--; // Shift pointer back up the list
                 DisplayWiki();
                 ClearBoxes();
             }
         }
+        /// <summary>
+        /// Swaps two entries in the record array, fails if one of the inputs is not in the filled array.
+        /// </summary>
+        /// <param name="entry1">The first entry to swap.</param>
+        /// <param name="entry2">The second entry to swap.</param>
         private void SwapEntries(int entry1, int entry2)
         {
             if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer) //If the given values are filled within the array
@@ -134,6 +139,9 @@ namespace Wiki_Prototype
                 StatusBar.Text = "Swap failed, one of the entries was out of bounds!";
             }
         }
+        /// <summary>
+        /// Bubble sorts the record array and refreshes the display. Does not run and gives feedback if there's less than two entries.
+        /// </summary>
         private void BubbleSort()
         {
             if (wikiPointer > 1) // If there's more than one entry to sort
@@ -154,6 +162,28 @@ namespace Wiki_Prototype
             {
                 StatusBar.Text = "Nothing to sort in the wiki!";
             }
+        }
+        /// <summary>
+        /// Searches the record array for the given search term by name, case-insensitive.
+        /// </summary>
+        /// <param name="searchTerm">The name of the record to search for.</param>
+        /// <returns>The index of the first matching wiki entry found, or -1 if no entry matches the search term.</returns>
+        private int SearchWiki(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return -1;
+            }
+            for (var i = 0; i < wikiPointer; i++)
+            {
+                if (String.Equals(searchTerm, recordArray[i, 0], StringComparison.OrdinalIgnoreCase))
+                {
+                    StatusBar.Text = "Entry " + recordArray[i, 0] + " found at position " + (i + 1) + "!";
+                    return i;
+                }
+            }
+            StatusBar.Text = "No results matching " + searchTerm + " found!";
+            return -1;
         }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
@@ -255,6 +285,27 @@ namespace Wiki_Prototype
         private void ButtonSort_Click(object sender, EventArgs e)
         {
             BubbleSort();
+        }
+
+        private void ButtonSearch_Click(object sender, EventArgs e)
+        {
+            var search = SearchWiki(TextBoxSearch.Text);
+            if (search > 0) // If the search is successful
+            {
+                DisplayEntry(search);
+                this.ListViewWiki.Items[search].Selected = true;
+            }
+            TextBoxSearch.Clear();
+        }
+
+        private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ButtonSearch_Click(sender, e);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
