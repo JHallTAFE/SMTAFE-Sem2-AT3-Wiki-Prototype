@@ -74,10 +74,10 @@ namespace Wiki_Prototype
             ListViewWiki.Items.Add(item);
         }
         /// <summary>
-        /// Fills the TextBoxes with the wiki entry given by the index
+        /// Displays the wiki entry given by the index in the text boxes to the left.
         /// </summary>
         /// <param name="i">Row of the record array to fill the text boxes with.</param>
-        private void FillBoxes(int i)
+        private void DisplayEntry(int i)
         {
             TextBoxName.Text = recordArray[i, 0];
             TextBoxCategory.Text = recordArray[i, 1];
@@ -190,14 +190,14 @@ namespace Wiki_Prototype
         private void ListViewWiki_Click(object sender, EventArgs e)
         {
             selectPointer = ListViewWiki.FocusedItem.Index;
-            FillBoxes(selectPointer);
+            DisplayEntry(selectPointer);
         }
         private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ListViewWiki.SelectedIndices.Count > 0)
             {
                 selectPointer = ListViewWiki.SelectedIndices[ListViewWiki.SelectedIndices.Count - 1];
-                FillBoxes(selectPointer);
+                DisplayEntry(selectPointer);
             }
         }
         private void TextBoxName_MouseDoubleClick(object sender, MouseEventArgs e)

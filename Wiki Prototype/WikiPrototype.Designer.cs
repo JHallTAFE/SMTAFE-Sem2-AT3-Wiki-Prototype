@@ -50,7 +50,6 @@
             ListViewWiki = new ListView();
             ColumnName = new ColumnHeader();
             ColumnCategory = new ColumnHeader();
-            ColumnStructure = new ColumnHeader();
             ButtonDemo = new Button();
             ButtonSort = new Button();
             StatusStrip.SuspendLayout();
@@ -202,7 +201,7 @@
             // 
             // ListViewWiki
             // 
-            ListViewWiki.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnCategory, ColumnStructure });
+            ListViewWiki.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnCategory });
             ListViewWiki.FullRowSelect = true;
             ListViewWiki.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             ListViewWiki.Location = new Point(355, 41);
@@ -219,17 +218,12 @@
             // ColumnName
             // 
             ColumnName.Text = "Name";
-            ColumnName.Width = 122;
+            ColumnName.Width = 141;
             // 
             // ColumnCategory
             // 
             ColumnCategory.Text = "Category";
-            ColumnCategory.Width = 80;
-            // 
-            // ColumnStructure
-            // 
-            ColumnStructure.Text = "Structure";
-            ColumnStructure.Width = 80;
+            ColumnCategory.Width = 141;
             // 
             // ButtonDemo
             // 
@@ -308,7 +302,6 @@
         private ListView ListViewWiki;
         private ColumnHeader ColumnName;
         private ColumnHeader ColumnCategory;
-        private ColumnHeader ColumnStructure;
         private ToolStripStatusLabel StatusBar;
         private Button ButtonDemo;
         private Button ButtonSort;
