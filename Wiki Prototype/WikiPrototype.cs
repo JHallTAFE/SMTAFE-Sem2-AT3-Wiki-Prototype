@@ -6,9 +6,11 @@ namespace Wiki_Prototype
     {
         const int rowSize = 12;
         const int colSize = 4;
+        const string defaultFileName = "definitions.dat";
         string[,] recordArray = new string[rowSize, colSize];
         int wikiPointer = 0; // Points to the last 'empty' entry, also the "length" of the filled records
         int selectPointer = -1; // The last selected item in the ListView
+        static string lastDirectory = Application.StartupPath;
         #region demo array
         bool demoLoaded = false;
         bool demoEnabled = true;
@@ -70,7 +72,6 @@ namespace Wiki_Prototype
         {
             ListViewItem item = new ListViewItem(recordArray[row, 0]);
             item.SubItems.Add(recordArray[row, 1]);
-            item.SubItems.Add(recordArray[row, 2]);
             ListViewWiki.Items.Add(item);
         }
         /// <summary>
@@ -116,6 +117,10 @@ namespace Wiki_Prototype
                 wikiPointer--; // Shift pointer back up the list
                 DisplayWiki();
                 ClearBoxes();
+                if (wikiPointer == 0)
+                {
+                    ButtonSave.Enabled = false;
+                }
             }
         }
         /// <summary>
@@ -185,6 +190,76 @@ namespace Wiki_Prototype
             StatusBar.Text = "No results matching " + searchTerm + " found!";
             return -1;
         }
+        /// <summary>
+        /// Opens a dialogue to save the information to a binary file.
+        /// </summary>
+        private void SaveFile()
+        {
+            using (SaveFileDialog saveFile = new SaveFileDialog())
+            {
+                saveFile.Title = "Select a file to save to";
+                saveFile.Filter = "Binary Files|*.dat";
+                saveFile.InitialDirectory = lastDirectory;
+                saveFile.FileName = defaultFileName;
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = saveFile.FileName;
+                    lastDirectory = Path.GetDirectoryName(fileName);
+                    using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+                    {
+                        for (var i = 0; i < recordArray.GetLength(0); i++)
+                        {
+                            for (var j = 0; j < recordArray.GetLength(1); j++)
+                            {
+                                bw.Write(recordArray[i, j]);
+                            }
+                        }
+                        StatusBar.Text = "Successfully saved to " + fileName;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Opens a dialogue to load the information from a binary file.
+        /// </summary>
+        private void OpenFile()
+        {
+            using (OpenFileDialog openFile = new OpenFileDialog())
+            {
+                openFile.Title = "Select a file to open";
+                openFile.Filter = "Binary Files|*.dat";
+                openFile.InitialDirectory = lastDirectory;
+                openFile.FileName = defaultFileName;
+                if (openFile.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = openFile.FileName;
+                    lastDirectory = Path.GetDirectoryName(fileName);
+                    using (BinaryReader br = new BinaryReader(File.Open(fileName, FileMode.Open)))
+                    {
+                        var i = 0;
+                        while (br.BaseStream.Position < br.BaseStream.Length)
+                        {
+                            try
+                            {
+                                for (var j = 0; j < 4; j++)
+                                {
+                                    recordArray[i, j] = br.ReadString();
+                                }
+                                i++;
+                            }
+                            catch (Exception)
+                            {
+                                StatusBar.Text = "Cannot read from file.";
+                                return;
+                            }
+                            DisplayWiki();
+                        }
+                        ButtonSave.Enabled = true;
+                        StatusBar.Text = "Successfully opened " + fileName;
+                    }
+                }
+            }
+        }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (wikiPointer < recordArray.GetLength(0))
@@ -196,6 +271,7 @@ namespace Wiki_Prototype
                 wikiPointer++;
                 DisplayWiki();
                 ClearBoxes();
+                ButtonSave.Enabled = true;
             }
             else
             {
@@ -265,12 +341,13 @@ namespace Wiki_Prototype
                     recordArray[wikiPointer, 3] = "~";
                 }
                 ButtonDemo.Enabled = false;
+                ButtonSave.Enabled = true;
                 demoLoaded = true;
                 DisplayWiki();
             }
             else
             {
-                StatusBar.Text = "Demo alreadyloaded!";
+                StatusBar.Text = "Demo already loaded!";
             }
         }
 
@@ -306,6 +383,16 @@ namespace Wiki_Prototype
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void ButtonLoad_Click(object sender, EventArgs e)
+        {
+            OpenFile();
         }
     }
 }

@@ -77,6 +77,7 @@
             ButtonLoad.TabIndex = 2;
             ButtonLoad.Text = "Load";
             ButtonLoad.UseVisualStyleBackColor = true;
+            ButtonLoad.Click += ButtonLoad_Click;
             // 
             // ButtonSave
             // 
@@ -86,6 +87,7 @@
             ButtonSave.TabIndex = 3;
             ButtonSave.Text = "Save";
             ButtonSave.UseVisualStyleBackColor = true;
+            ButtonSave.Click += ButtonSave_Click;
             // 
             // TextBoxSearch
             // 
