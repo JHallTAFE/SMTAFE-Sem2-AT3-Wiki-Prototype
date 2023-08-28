@@ -7,7 +7,7 @@ namespace Wiki_Prototype
         const int rowSize = 12;
         const int colSize = 4;
         string[,] recordArray = new string[rowSize, colSize];
-        int wikiPointer = 0; // Points to the last 'empty' entry
+        int wikiPointer = 0; // Points to the last 'empty' entry, also the "length" of the filled records
         int selectPointer = -1; // The last selected item in the ListView
         #region demo array
         bool demoLoaded = false;
@@ -19,7 +19,13 @@ namespace Wiki_Prototype
             {"List", "List", "Linear", "A list." },
             {"Linked List", "List", "Linear", "A linked list." },
             {"Self-Balance Tree", "Tree", "Non-Linear", "A self-balance tree" },
-            {"Heap", "Tree", "Non-Linear", "A heap." }
+            {"Heap", "Tree", "Non-Linear", "A heap." },
+            {"Binary Search Tree", "Tree", "Non-Linear", "A binary search tree." },
+            {"Graph", "Graphs", "Non-Linear", "A graph." },
+            {"Set", "Abstract", "Non-Linear", "A set." },
+            {"Queue", "Abstract", "Linear", "A queue." },
+            {"Stack", "Abstract", "Linear", "A stack." },
+            {"Hash Table", "Hash", "Non-Linear", "A hash table." }
         };
         #endregion
         public WikiPrototype()
@@ -96,7 +102,7 @@ namespace Wiki_Prototype
         {
             if (MessageBox.Show("Do you wish to delete the entry " + recordArray[i, 0] + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                for (int j = i; j < wikiPointer; j++) // From the given row to the last filled row
+                for (int j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row
                 {
                     for (int k = 0; k < 4; k++) // For each element in the row
                     {
@@ -112,16 +118,59 @@ namespace Wiki_Prototype
                 ClearBoxes();
             }
         }
+        private void SwapEntries(int entry1, int entry2)
+        {
+            if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer) //If the given values are filled within the array
+            {
+                string[] tempEntry = { recordArray[entry1, 0], recordArray[entry1, 1], recordArray[entry1, 2], recordArray[entry1, 3] };
+                for (int i = 0; i < 4; i++)
+                {
+                    recordArray[entry1, i] = recordArray[entry2, i];
+                    recordArray[entry2, i] = tempEntry[i];
+                }
+            }
+            else
+            {
+                StatusBar.Text = "Swap failed, one of the entries was out of bounds!";
+            }
+        }
+        private void BubbleSort()
+        {
+            if (wikiPointer > 1) // If there's more than one entry to sort
+            {
+                for (int i = 0; i < wikiPointer; i++)
+                {
+                    for (int j = 0; j < wikiPointer - i - 1; j++)
+                    {
+                        if (string.Compare(recordArray[j, 0], recordArray[j + 1, 0]) > 0)
+                        {
+                            SwapEntries(j, j + 1);
+                        }
+                    }
+                }
+                DisplayWiki();
+            }
+            else
+            {
+                StatusBar.Text = "Nothing to sort in the wiki!";
+            }
+        }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            //TO DO: Check if pointer points out of the array
-            recordArray[wikiPointer, 0] = TextBoxName.Text;
-            recordArray[wikiPointer, 1] = TextBoxCategory.Text;
-            recordArray[wikiPointer, 2] = TextBoxStructure.Text;
-            recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
-            wikiPointer++;
-            DisplayWiki();
-            ClearBoxes();
+            if (wikiPointer < recordArray.GetLength(0))
+            {
+                recordArray[wikiPointer, 0] = TextBoxName.Text;
+                recordArray[wikiPointer, 1] = TextBoxCategory.Text;
+                recordArray[wikiPointer, 2] = TextBoxStructure.Text;
+                recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
+                wikiPointer++;
+                DisplayWiki();
+                ClearBoxes();
+            }
+            else
+            {
+                StatusBar.Text = "Cannot add new entry; the wiki is full!";
+            }
         }
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
@@ -170,7 +219,7 @@ namespace Wiki_Prototype
         {
             if (demoLoaded == false)
             {
-                for (int i = 0; i < demoArray.GetLength(0) - 1; i++)
+                for (int i = 0; i < demoArray.GetLength(0); i++)
                 {
                     recordArray[wikiPointer, 0] = demoArray[i, 0];
                     recordArray[wikiPointer, 1] = demoArray[i, 1];
@@ -201,6 +250,11 @@ namespace Wiki_Prototype
             {
                 DeleteEntry(selectPointer);
             }
+        }
+
+        private void ButtonSort_Click(object sender, EventArgs e)
+        {
+            BubbleSort();
         }
     }
 }

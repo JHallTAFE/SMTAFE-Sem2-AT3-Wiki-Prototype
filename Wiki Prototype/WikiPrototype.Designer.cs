@@ -52,6 +52,7 @@
             ColumnCategory = new ColumnHeader();
             ColumnStructure = new ColumnHeader();
             ButtonDemo = new Button();
+            ButtonSort = new Button();
             StatusStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -240,11 +241,22 @@
             ButtonDemo.UseVisualStyleBackColor = true;
             ButtonDemo.Click += ButtonDemo_Click;
             // 
+            // ButtonSort
+            // 
+            ButtonSort.Location = new Point(566, 280);
+            ButtonSort.Name = "ButtonSort";
+            ButtonSort.Size = new Size(75, 23);
+            ButtonSort.TabIndex = 19;
+            ButtonSort.Text = "Sort";
+            ButtonSort.UseVisualStyleBackColor = true;
+            ButtonSort.Click += ButtonSort_Click;
+            // 
             // WikiPrototype
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 411);
+            Controls.Add(ButtonSort);
             Controls.Add(ButtonDemo);
             Controls.Add(ListViewWiki);
             Controls.Add(ButtonDelete);
@@ -299,5 +311,6 @@
         private ColumnHeader ColumnStructure;
         private ToolStripStatusLabel StatusBar;
         private Button ButtonDemo;
+        private Button ButtonSort;
     }
 }
