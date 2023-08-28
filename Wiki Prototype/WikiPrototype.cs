@@ -36,9 +36,9 @@ namespace Wiki_Prototype
             {
                 ButtonDemo.Visible = true;
             }
-            for (int i = 0; i < rowSize; i++)
+            for (var i = 0; i < rowSize; i++)
             {
-                for (int j = 0; j < colSize; j++)
+                for (var j = 0; j < colSize; j++)
                     recordArray[i, j] = "~";
             }
             DisplayWiki();
@@ -54,7 +54,7 @@ namespace Wiki_Prototype
         private void DisplayWiki()
         {
             ListViewWiki.Items.Clear();
-            for (int i = 0; i < rowSize; i++)
+            for (var i = 0; i < rowSize; i++)
             {
                 if (recordArray[i, 0] != "~")
                 {
@@ -102,14 +102,14 @@ namespace Wiki_Prototype
         {
             if (MessageBox.Show("Do you wish to delete the entry " + recordArray[i, 0] + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                for (int j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row
+                for (var j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row
                 {
-                    for (int k = 0; k < 4; k++) // For each element in the row
+                    for (var k = 0; k < 4; k++) // For each element in the row
                     {
                         recordArray[j, k] = recordArray[j + 1, k]; // Replace the given row with the next row
                     }
                 }
-                for (int j = 0; j < 4; j++)
+                for (var j = 0; j < 4; j++)
                 {
                     recordArray[wikiPointer - 1, j] = "~"; // Fill the last row (now duplicated) with empty results
                 }
@@ -128,7 +128,7 @@ namespace Wiki_Prototype
             if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer) //If the given values are filled within the array
             {
                 string[] tempEntry = { recordArray[entry1, 0], recordArray[entry1, 1], recordArray[entry1, 2], recordArray[entry1, 3] };
-                for (int i = 0; i < 4; i++)
+                for (var i = 0; i < 4; i++)
                 {
                     recordArray[entry1, i] = recordArray[entry2, i];
                     recordArray[entry2, i] = tempEntry[i];
@@ -146,9 +146,9 @@ namespace Wiki_Prototype
         {
             if (wikiPointer > 1) // If there's more than one entry to sort
             {
-                for (int i = 0; i < wikiPointer; i++)
+                for (var i = 0; i < wikiPointer; i++)
                 {
-                    for (int j = 0; j < wikiPointer - i - 1; j++)
+                    for (var j = 0; j < wikiPointer - i - 1; j++)
                     {
                         if (string.Compare(recordArray[j, 0], recordArray[j + 1, 0]) > 0)
                         {
@@ -249,7 +249,7 @@ namespace Wiki_Prototype
         {
             if (demoLoaded == false)
             {
-                for (int i = 0; i < demoArray.GetLength(0); i++)
+                for (var i = 0; i < demoArray.GetLength(0); i++)
                 {
                     recordArray[wikiPointer, 0] = demoArray[i, 0];
                     recordArray[wikiPointer, 1] = demoArray[i, 1];
@@ -257,7 +257,7 @@ namespace Wiki_Prototype
                     recordArray[wikiPointer, 3] = demoArray[i, 3];
                     wikiPointer++;
                 }
-                for (int i = demoArray.GetLength(0); i < rowSize; i++)
+                for (var i = demoArray.GetLength(0); i < rowSize; i++)
                 {
                     recordArray[wikiPointer, 0] = "~";
                     recordArray[wikiPointer, 1] = "~";
