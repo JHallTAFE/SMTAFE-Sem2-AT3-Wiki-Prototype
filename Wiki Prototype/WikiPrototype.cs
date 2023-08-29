@@ -8,8 +8,8 @@ namespace Wiki_Prototype
         const int colSize = 4;
         const string defaultFileName = "definitions.dat";
         string[,] recordArray = new string[rowSize, colSize];
-        int wikiPointer = 0; // Points to the last 'empty' entry, also the "length" of the filled records
-        int selectPointer = -1; // The last selected item in the ListView
+        int wikiPointer = 0; // Points to the last 'empty' entry, also the "length" of the filled records.
+        int selectPointer = -1; // The last selected item in the ListView.
         static string lastDirectory = Application.StartupPath;
         #region demo array
         bool demoLoaded = false;
@@ -41,7 +41,7 @@ namespace Wiki_Prototype
             for (var i = 0; i < rowSize; i++)
             {
                 for (var j = 0; j < colSize; j++)
-                    recordArray[i, j] = "~";
+                    recordArray[i, j] = "~"; // ~ acts as a "blank" entry to fill the array with.
             }
             DisplayWiki();
         }
@@ -58,7 +58,7 @@ namespace Wiki_Prototype
             ListViewWiki.Items.Clear();
             for (var i = 0; i < rowSize; i++)
             {
-                if (recordArray[i, 0] != "~")
+                if (recordArray[i, 0] != "~") // ~ acts as a "blank" entry to fill the array with.
                 {
                     AddRow(i);
                 }
@@ -70,6 +70,7 @@ namespace Wiki_Prototype
         /// <param name="row">Row of the record array to add to the ListView.</param>
         private void AddRow(int row)
         {
+            // Creates a ListViewItem and populates it with the Name and Category to add to the ListView.
             ListViewItem item = new ListViewItem(recordArray[row, 0]);
             item.SubItems.Add(recordArray[row, 1]);
             ListViewWiki.Items.Add(item);
@@ -102,21 +103,24 @@ namespace Wiki_Prototype
         private void DeleteEntry(int i)
         {
             if (MessageBox.Show("Do you wish to delete the entry " + recordArray[i, 0] + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            // If the user says Yes.
             {
-                for (var j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row
+                for (var j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row.
                 {
-                    for (var k = 0; k < colSize; k++) // For each element in the row
+                    for (var k = 0; k < colSize; k++) // For each column in the row.
                     {
-                        recordArray[j, k] = recordArray[j + 1, k]; // Replace the given row with the next row
+                        recordArray[j, k] = recordArray[j + 1, k]; // Replace the given entry with the next row's entry.
                     }
                 }
+                // Fill the last (duplicate) row with ~.
                 for (var j = 0; j < colSize; j++)
                 {
-                    recordArray[wikiPointer - 1, j] = "~"; // Fill the last row (now duplicated) with empty results
+                    recordArray[wikiPointer - 1, j] = "~";
                 }
-                wikiPointer--; // Shift pointer back up the list
+                wikiPointer--; // Shift pointer back up the list.
                 DisplayWiki();
                 ClearBoxes();
+                // If the records are now "empty", disable the save button as there's nothing to save.
                 if (wikiPointer == 0)
                 {
                     ButtonSave.Enabled = false;
@@ -124,13 +128,14 @@ namespace Wiki_Prototype
             }
         }
         /// <summary>
-        /// Swaps two entries in the record array, fails if one of the inputs is not in the filled array.
+        /// Swaps two entries in the record array, fails if one of the inputs is not in the filled array or if the two parameters are equivalent.
         /// </summary>
         /// <param name="entry1">The first entry to swap.</param>
         /// <param name="entry2">The second entry to swap.</param>
         private void SwapEntries(int entry1, int entry2)
         {
-            if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer) //If the given values are filled within the array
+            // If the given values are within the filled bounds of the record array, and they're not equal to each other.
+            if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer && entry1 != entry2)
             {
                 string[] tempEntry = { recordArray[entry1, 0], recordArray[entry1, 1], recordArray[entry1, 2], recordArray[entry1, 3] };
                 for (var i = 0; i < colSize; i++)
@@ -139,7 +144,11 @@ namespace Wiki_Prototype
                     recordArray[entry2, i] = tempEntry[i];
                 }
             }
-            else
+            else if (entry1 == entry2) // If the method is given the same entry twice.
+            {
+                StatusBar.Text = "Cannot swap entry with itself!";
+            }
+            else // If the values are out of bounds.
             {
                 StatusBar.Text = "Swap failed, one of the entries was out of bounds!";
             }
@@ -151,6 +160,7 @@ namespace Wiki_Prototype
         {
             if (wikiPointer > 1) // If there's more than one entry to sort
             {
+                // Basic Bubble Sort algorithm.
                 for (var i = 0; i < wikiPointer; i++)
                 {
                     for (var j = 0; j < wikiPointer - i - 1; j++)
@@ -163,7 +173,7 @@ namespace Wiki_Prototype
                 }
                 DisplayWiki();
             }
-            else
+            else // There's 0 or 1 entries.
             {
                 StatusBar.Text = "Nothing to sort in the wiki!";
             }
@@ -175,11 +185,12 @@ namespace Wiki_Prototype
         /// <returns>The index of the first matching wiki entry found, or -1 if no entry matches the search term.</returns>
         private int SearchWiki(string searchTerm)
         {
-            if (string.IsNullOrWhiteSpace(searchTerm))
+            if (string.IsNullOrWhiteSpace(searchTerm)) // If there's nothing to search for.
             {
                 return -1;
             }
             for (var i = 0; i < wikiPointer; i++)
+            // Search record array for a name matching the search term, case-insensitive. Stop at first result.
             {
                 if (String.Equals(searchTerm, recordArray[i, 0], StringComparison.OrdinalIgnoreCase))
                 {
@@ -199,6 +210,7 @@ namespace Wiki_Prototype
             {
                 using (SaveFileDialog saveFile = new SaveFileDialog())
                 {
+                    // Initialising save dialogue properties.
                     saveFile.Title = "Select a file to save to";
                     saveFile.Filter = "Binary Files|*.dat";
                     saveFile.InitialDirectory = lastDirectory;
@@ -206,9 +218,13 @@ namespace Wiki_Prototype
                     if (saveFile.ShowDialog() == DialogResult.OK)
                     {
                         string fileName = saveFile.FileName;
-                        lastDirectory = Path.GetDirectoryName(fileName);
+                        if (Path.GetDirectoryName(fileName) is not null) // Avoiding null assignment.
+                        {
+                            lastDirectory = Path.GetDirectoryName(fileName); // Writes to lastDirectory static var for the next time the user opens or saves a file.
+                        }
                         try
                         {
+                            // Writing to the file given by the user, each string from the record array at a time.
                             using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
                             {
                                 for (var i = 0; i < recordArray.GetLength(0); i++)
@@ -246,6 +262,7 @@ namespace Wiki_Prototype
             {
                 using (OpenFileDialog openFile = new OpenFileDialog())
                 {
+                    // Initialising open dialogue properties.
                     openFile.Title = "Select a file to open";
                     openFile.Filter = "Binary Files|*.dat";
                     openFile.InitialDirectory = lastDirectory;
@@ -253,19 +270,22 @@ namespace Wiki_Prototype
                     if (openFile.ShowDialog() == DialogResult.OK)
                     {
                         string fileName = openFile.FileName;
-                        lastDirectory = Path.GetDirectoryName(fileName);
+                        if (Path.GetDirectoryName(fileName) is not null) // Avoiding null assignment.
+                        {
+                            lastDirectory = Path.GetDirectoryName(fileName); // Writes to lastDirectory static var for the next time the user opens or saves a file.
+                        }
                         try
                         {
                             using (BinaryReader br = new BinaryReader(File.Open(fileName, FileMode.Open)))
                             {
                                 var i = 0;
-                                while (br.BaseStream.Position < br.BaseStream.Length)
+                                while (br.BaseStream.Position < br.BaseStream.Length) // From the start until EOF, for each row
                                 {
                                     try
                                     {
-                                        for (var j = 0; j < colSize; j++)
+                                        for (var j = 0; j < colSize; j++) // Now for each column in the row
                                         {
-                                            recordArray[i, j] = br.ReadString();
+                                            recordArray[i, j] = br.ReadString(); // Read file piece as a string
                                         }
                                         i++;
                                     }
@@ -274,8 +294,8 @@ namespace Wiki_Prototype
                                         StatusBar.Text = "Cannot read from file.";
                                         return;
                                     }
-                                    DisplayWiki();
                                 }
+                                DisplayWiki();
                                 ButtonSave.Enabled = true;
                                 StatusBar.Text = "Successfully opened " + fileName;
                             }
@@ -311,7 +331,7 @@ namespace Wiki_Prototype
                 wikiPointer++;
                 DisplayWiki();
                 ClearBoxes();
-                ButtonSave.Enabled = true;
+                ButtonSave.Enabled = true; // There's now something to save, so enable the button.
             }
             else
             {
@@ -320,7 +340,7 @@ namespace Wiki_Prototype
         }
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
-            if (selectPointer >= 0)
+            if (selectPointer >= 0) // If an item is selected from the ListView.
             {
                 recordArray[selectPointer, 0] = TextBoxName.Text;
                 recordArray[selectPointer, 1] = TextBoxCategory.Text;
@@ -342,12 +362,13 @@ namespace Wiki_Prototype
         {
             if (ListViewWiki.SelectedIndices.Count > 0)
             {
-                selectPointer = ListViewWiki.SelectedIndices[ListViewWiki.SelectedIndices.Count - 1];
+                selectPointer = ListViewWiki.SelectedIndices[ListViewWiki.SelectedIndices.Count - 1]; // Gets the first selected item out of the collection (should only ever select one anyway).
                 DisplayEntry(selectPointer);
             }
         }
         private void TextBoxName_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            // "A double mouse click in the name text box will clear all four text boxes and focus the cursor into the name text box" - Client Program Criteria
             ClearBoxes();
             TextBoxName.Focus();
             selectPointer = -1;
@@ -355,37 +376,46 @@ namespace Wiki_Prototype
 
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
-            if (selectPointer >= 0)
+            if (selectPointer >= 0) // If an item is actually selected to delete
             {
                 DeleteEntry(selectPointer);
+            }
+            else
+            {
+                StatusBar.Text = "Nothing selected to delete!";
             }
         }
 
         private void ButtonDemo_Click(object sender, EventArgs e)
         {
-            if (demoLoaded == false)
+            // Loads demo entries once, for testing purposes only. Button only available if demoEnabled = true.
+            // Fills all records with as many demo entries are provided, and blank ~ records for the rest.
+            if (demoLoaded == false) // If the demo hasn't been loaded yet.
             {
-                for (var i = 0; i < demoArray.GetLength(0); i++)
+                wikiPointer = 0; // Prepare wiki pointer, as all existing entries will be overwritten.
+                for (var i = 0; i < demoArray.GetLength(0) && i < rowSize; i++) // For each row in demoArray, without going over rowsize
                 {
-                    recordArray[wikiPointer, 0] = demoArray[i, 0];
-                    recordArray[wikiPointer, 1] = demoArray[i, 1];
-                    recordArray[wikiPointer, 2] = demoArray[i, 2];
-                    recordArray[wikiPointer, 3] = demoArray[i, 3];
+                    for (var j = 0; j < colSize; j++)
+                    {
+                        recordArray[wikiPointer, j] = demoArray[i, j];
+                    }
                     wikiPointer++;
                 }
                 for (var i = demoArray.GetLength(0); i < rowSize; i++)
                 {
-                    recordArray[wikiPointer, 0] = "~";
-                    recordArray[wikiPointer, 1] = "~";
-                    recordArray[wikiPointer, 2] = "~";
-                    recordArray[wikiPointer, 3] = "~";
+                    for (var j = 0; j < colSize; j++)
+                    {
+                        recordArray[wikiPointer, j] = "~";
+                    }
+
                 }
+                // Demo has been loaded, and now there's something to save.
                 ButtonDemo.Enabled = false;
                 ButtonSave.Enabled = true;
                 demoLoaded = true;
                 DisplayWiki();
             }
-            else
+            else // Shouldn't be able to press the button, but here just in case.
             {
                 StatusBar.Text = "Demo already loaded!";
             }
@@ -412,10 +442,11 @@ namespace Wiki_Prototype
                 DisplayEntry(search);
                 this.ListViewWiki.Items[search].Selected = true;
             }
+            // Search result feedback is handled by the SearchWiki method.
             TextBoxSearch.Clear();
         }
 
-        private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
+        private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e) // Allows searching via pressing the enter key in the Search box.
         {
             if (e.KeyCode == Keys.Enter)
             {

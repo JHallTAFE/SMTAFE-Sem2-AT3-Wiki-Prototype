@@ -30,8 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             ToolTip = new ToolTip(components);
-            StatusStrip = new StatusStrip();
-            StatusBar = new ToolStripStatusLabel();
             ButtonLoad = new Button();
             ButtonSave = new Button();
             TextBoxSearch = new TextBox();
@@ -39,35 +37,23 @@
             TextBoxName = new TextBox();
             TextBoxCategory = new TextBox();
             TextBoxStructure = new TextBox();
-            LabelName = new Label();
-            LabelCategory = new Label();
-            LabelStructure = new Label();
             TextBoxDefinition = new TextBox();
-            LabelDefinition = new Label();
-            ButtonAdd = new Button();
-            ButtonEdit = new Button();
-            ButtonDelete = new Button();
             ListViewWiki = new ListView();
             ColumnName = new ColumnHeader();
             ColumnCategory = new ColumnHeader();
             ButtonDemo = new Button();
             ButtonSort = new Button();
+            ButtonAdd = new Button();
+            ButtonEdit = new Button();
+            ButtonDelete = new Button();
+            StatusStrip = new StatusStrip();
+            StatusBar = new ToolStripStatusLabel();
+            LabelName = new Label();
+            LabelCategory = new Label();
+            LabelStructure = new Label();
+            LabelDefinition = new Label();
             StatusStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // StatusStrip
-            // 
-            StatusStrip.Items.AddRange(new ToolStripItem[] { StatusBar });
-            StatusStrip.Location = new Point(0, 389);
-            StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new Size(784, 22);
-            StatusStrip.TabIndex = 1;
-            StatusStrip.Text = "statusStrip1";
-            // 
-            // StatusBar
-            // 
-            StatusBar.Name = "StatusBar";
-            StatusBar.Size = new Size(0, 17);
             // 
             // ButtonLoad
             // 
@@ -97,7 +83,7 @@
             TextBoxSearch.Name = "TextBoxSearch";
             TextBoxSearch.Size = new Size(143, 23);
             TextBoxSearch.TabIndex = 4;
-            ToolTip.SetToolTip(TextBoxSearch, "Search term to search the wiki with.");
+            ToolTip.SetToolTip(TextBoxSearch, "Search term to search the records with.");
             TextBoxSearch.KeyDown += TextBoxSearch_KeyDown;
             // 
             // ButtonSearch
@@ -107,7 +93,7 @@
             ButtonSearch.Size = new Size(62, 23);
             ButtonSearch.TabIndex = 5;
             ButtonSearch.Text = "Search";
-            ToolTip.SetToolTip(ButtonSearch, "Search the wiki for the given entry.");
+            ToolTip.SetToolTip(ButtonSearch, "Search the records for the given entry.");
             ButtonSearch.UseVisualStyleBackColor = true;
             ButtonSearch.Click += ButtonSearch_Click;
             // 
@@ -117,7 +103,7 @@
             TextBoxName.Name = "TextBoxName";
             TextBoxName.Size = new Size(100, 23);
             TextBoxName.TabIndex = 6;
-            ToolTip.SetToolTip(TextBoxName, "Name of the record.");
+            ToolTip.SetToolTip(TextBoxName, "Name of the record. Double clicking here will clear the record boxes.");
             TextBoxName.MouseDoubleClick += TextBoxName_MouseDoubleClick;
             // 
             // TextBoxCategory
@@ -136,33 +122,6 @@
             TextBoxStructure.TabIndex = 8;
             ToolTip.SetToolTip(TextBoxStructure, "The type of structure the record is.");
             // 
-            // LabelName
-            // 
-            LabelName.AutoSize = true;
-            LabelName.Location = new Point(12, 11);
-            LabelName.Name = "LabelName";
-            LabelName.Size = new Size(39, 15);
-            LabelName.TabIndex = 9;
-            LabelName.Text = "Name";
-            // 
-            // LabelCategory
-            // 
-            LabelCategory.AutoSize = true;
-            LabelCategory.Location = new Point(12, 40);
-            LabelCategory.Name = "LabelCategory";
-            LabelCategory.Size = new Size(55, 15);
-            LabelCategory.TabIndex = 10;
-            LabelCategory.Text = "Category";
-            // 
-            // LabelStructure
-            // 
-            LabelStructure.AutoSize = true;
-            LabelStructure.Location = new Point(12, 69);
-            LabelStructure.Name = "LabelStructure";
-            LabelStructure.Size = new Size(55, 15);
-            LabelStructure.TabIndex = 11;
-            LabelStructure.Text = "Structure";
-            // 
             // TextBoxDefinition
             // 
             TextBoxDefinition.Location = new Point(12, 116);
@@ -171,45 +130,6 @@
             TextBoxDefinition.Size = new Size(296, 166);
             TextBoxDefinition.TabIndex = 12;
             ToolTip.SetToolTip(TextBoxDefinition, "The definition of the record.");
-            // 
-            // LabelDefinition
-            // 
-            LabelDefinition.AutoSize = true;
-            LabelDefinition.Location = new Point(12, 98);
-            LabelDefinition.Name = "LabelDefinition";
-            LabelDefinition.Size = new Size(59, 15);
-            LabelDefinition.TabIndex = 13;
-            LabelDefinition.Text = "Definition";
-            // 
-            // ButtonAdd
-            // 
-            ButtonAdd.Location = new Point(194, 12);
-            ButtonAdd.Name = "ButtonAdd";
-            ButtonAdd.Size = new Size(75, 23);
-            ButtonAdd.TabIndex = 14;
-            ButtonAdd.Text = "ADD";
-            ButtonAdd.UseVisualStyleBackColor = true;
-            ButtonAdd.Click += ButtonAdd_Click;
-            // 
-            // ButtonEdit
-            // 
-            ButtonEdit.Location = new Point(194, 40);
-            ButtonEdit.Name = "ButtonEdit";
-            ButtonEdit.Size = new Size(75, 23);
-            ButtonEdit.TabIndex = 15;
-            ButtonEdit.Text = "EDIT";
-            ButtonEdit.UseVisualStyleBackColor = true;
-            ButtonEdit.Click += ButtonEdit_Click;
-            // 
-            // ButtonDelete
-            // 
-            ButtonDelete.Location = new Point(194, 69);
-            ButtonDelete.Name = "ButtonDelete";
-            ButtonDelete.Size = new Size(75, 23);
-            ButtonDelete.TabIndex = 16;
-            ButtonDelete.Text = "DELETE";
-            ButtonDelete.UseVisualStyleBackColor = true;
-            ButtonDelete.Click += ButtonDelete_Click;
             // 
             // ListViewWiki
             // 
@@ -222,7 +142,7 @@
             ListViewWiki.Name = "ListViewWiki";
             ListViewWiki.Size = new Size(286, 256);
             ListViewWiki.TabIndex = 17;
-            ToolTip.SetToolTip(ListViewWiki, "List of entries in the wiki.");
+            ToolTip.SetToolTip(ListViewWiki, "List of records.");
             ListViewWiki.UseCompatibleStateImageBehavior = false;
             ListViewWiki.View = View.Details;
             ListViewWiki.SelectedIndexChanged += ListViewWiki_SelectedIndexChanged;
@@ -260,6 +180,89 @@
             ToolTip.SetToolTip(ButtonSort, "Sort the records.");
             ButtonSort.UseVisualStyleBackColor = true;
             ButtonSort.Click += ButtonSort_Click;
+            // 
+            // ButtonAdd
+            // 
+            ButtonAdd.Location = new Point(194, 12);
+            ButtonAdd.Name = "ButtonAdd";
+            ButtonAdd.Size = new Size(75, 23);
+            ButtonAdd.TabIndex = 14;
+            ButtonAdd.Text = "ADD";
+            ToolTip.SetToolTip(ButtonAdd, "Adds an entry to the wiki with the text boxes.");
+            ButtonAdd.UseVisualStyleBackColor = true;
+            ButtonAdd.Click += ButtonAdd_Click;
+            // 
+            // ButtonEdit
+            // 
+            ButtonEdit.Location = new Point(194, 40);
+            ButtonEdit.Name = "ButtonEdit";
+            ButtonEdit.Size = new Size(75, 23);
+            ButtonEdit.TabIndex = 15;
+            ButtonEdit.Text = "EDIT";
+            ToolTip.SetToolTip(ButtonEdit, "Overwrites an existing entry with the user's changes.");
+            ButtonEdit.UseVisualStyleBackColor = true;
+            ButtonEdit.Click += ButtonEdit_Click;
+            // 
+            // ButtonDelete
+            // 
+            ButtonDelete.Location = new Point(194, 69);
+            ButtonDelete.Name = "ButtonDelete";
+            ButtonDelete.Size = new Size(75, 23);
+            ButtonDelete.TabIndex = 16;
+            ButtonDelete.Text = "DELETE";
+            ToolTip.SetToolTip(ButtonDelete, "Deletes the selected entry from the records.");
+            ButtonDelete.UseVisualStyleBackColor = true;
+            ButtonDelete.Click += ButtonDelete_Click;
+            // 
+            // StatusStrip
+            // 
+            StatusStrip.Items.AddRange(new ToolStripItem[] { StatusBar });
+            StatusStrip.Location = new Point(0, 389);
+            StatusStrip.Name = "StatusStrip";
+            StatusStrip.Size = new Size(784, 22);
+            StatusStrip.TabIndex = 1;
+            StatusStrip.Text = "statusStrip1";
+            // 
+            // StatusBar
+            // 
+            StatusBar.Name = "StatusBar";
+            StatusBar.Size = new Size(0, 17);
+            // 
+            // LabelName
+            // 
+            LabelName.AutoSize = true;
+            LabelName.Location = new Point(12, 11);
+            LabelName.Name = "LabelName";
+            LabelName.Size = new Size(39, 15);
+            LabelName.TabIndex = 9;
+            LabelName.Text = "Name";
+            // 
+            // LabelCategory
+            // 
+            LabelCategory.AutoSize = true;
+            LabelCategory.Location = new Point(12, 40);
+            LabelCategory.Name = "LabelCategory";
+            LabelCategory.Size = new Size(55, 15);
+            LabelCategory.TabIndex = 10;
+            LabelCategory.Text = "Category";
+            // 
+            // LabelStructure
+            // 
+            LabelStructure.AutoSize = true;
+            LabelStructure.Location = new Point(12, 69);
+            LabelStructure.Name = "LabelStructure";
+            LabelStructure.Size = new Size(55, 15);
+            LabelStructure.TabIndex = 11;
+            LabelStructure.Text = "Structure";
+            // 
+            // LabelDefinition
+            // 
+            LabelDefinition.AutoSize = true;
+            LabelDefinition.Location = new Point(12, 98);
+            LabelDefinition.Name = "LabelDefinition";
+            LabelDefinition.Size = new Size(59, 15);
+            LabelDefinition.TabIndex = 13;
+            LabelDefinition.Text = "Definition";
             // 
             // WikiPrototype
             // 
