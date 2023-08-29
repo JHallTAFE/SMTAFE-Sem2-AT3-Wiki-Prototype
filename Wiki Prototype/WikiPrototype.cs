@@ -14,7 +14,7 @@ namespace Wiki_Prototype
         static string lastDirectory = Application.StartupPath;
         #region demo array
         bool demoLoaded = false;
-        bool demoEnabled = true;
+        bool demoEnabled = false;
         string[,] demoArray =
         {
             {"Array", "Array", "Linear", "An Array." },
@@ -35,9 +35,9 @@ namespace Wiki_Prototype
         {
             InitializeComponent();
             ButtonSave.Enabled = false;
-            if (demoEnabled)
+            if (!demoEnabled)
             {
-                ButtonDemo.Visible = true;
+                ButtonDemo.Visible = false;
             }
             for (var i = 0; i < rowSize; i++)
             {

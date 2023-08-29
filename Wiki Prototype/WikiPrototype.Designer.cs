@@ -217,9 +217,10 @@
             // StatusStrip
             // 
             StatusStrip.Items.AddRange(new ToolStripItem[] { StatusBar });
-            StatusStrip.Location = new Point(0, 389);
+            StatusStrip.Location = new Point(0, 326);
             StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new Size(784, 22);
+            StatusStrip.Size = new Size(672, 22);
+            StatusStrip.SizingGrip = false;
             StatusStrip.TabIndex = 1;
             StatusStrip.Text = "statusStrip1";
             // 
@@ -268,7 +269,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 411);
+            ClientSize = new Size(672, 348);
             Controls.Add(ButtonSort);
             Controls.Add(ButtonDemo);
             Controls.Add(ListViewWiki);
