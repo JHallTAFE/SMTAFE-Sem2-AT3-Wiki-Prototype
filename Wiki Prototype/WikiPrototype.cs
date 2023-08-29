@@ -4,6 +4,7 @@ namespace Wiki_Prototype
 {
     public partial class WikiPrototype : Form
     {
+        // Criteria 9.1
         const int rowSize = 12;
         const int colSize = 4;
         const string defaultFileName = "definitions.dat";
@@ -50,6 +51,7 @@ namespace Wiki_Prototype
         {
 
         }
+        // Criteria 9.8
         /// <summary>
         /// Refreshes the ListView to display the current wiki loaded in the record array.
         /// </summary>
@@ -75,6 +77,7 @@ namespace Wiki_Prototype
             item.SubItems.Add(recordArray[row, 1]);
             ListViewWiki.Items.Add(item);
         }
+        // Criteria 9.9 Part 2
         /// <summary>
         /// Displays the wiki entry given by the index in the text boxes to the left.
         /// </summary>
@@ -153,6 +156,7 @@ namespace Wiki_Prototype
                 StatusBar.Text = "Swap failed, one of the entries was out of bounds!";
             }
         }
+        // Criteria 9.6
         /// <summary>
         /// Bubble sorts the record array and refreshes the display. Does not run and gives feedback if there's less than two entries.
         /// </summary>
@@ -178,6 +182,7 @@ namespace Wiki_Prototype
                 StatusBar.Text = "Nothing to sort in the wiki!";
             }
         }
+        // Criteria 9.7
         /// <summary>
         /// Searches the record array for the given search term by name, case-insensitive.
         /// </summary>
@@ -201,6 +206,7 @@ namespace Wiki_Prototype
             StatusBar.Text = "No results matching " + searchTerm + " found!";
             return -1;
         }
+        // Criteria 9.10 Part 2
         /// <summary>
         /// Opens a dialogue to save the information to a binary file.
         /// </summary>
@@ -253,6 +259,7 @@ namespace Wiki_Prototype
                 StatusBar.Text = "An error occured while trying to save the file.";
             }
         }
+        // Criteria 9.11 Part 2
         /// <summary>
         /// Opens a dialogue to load the information from a binary file.
         /// </summary>
@@ -320,6 +327,7 @@ namespace Wiki_Prototype
                 StatusBar.Text = "An error occured while trying to open the file.";
             }
         }
+        // Criteria 9.2
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (wikiPointer < recordArray.GetLength(0))
@@ -338,6 +346,7 @@ namespace Wiki_Prototype
                 StatusBar.Text = "Cannot add new entry; the wiki is full!";
             }
         }
+        // Criteria 9.3
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
             if (selectPointer >= 0) // If an item is selected from the ListView.
@@ -353,11 +362,13 @@ namespace Wiki_Prototype
                 StatusBar.Text = "No item currently selected!";
             }
         }
+        // Criteria 9.9 Part 1 A
         private void ListViewWiki_Click(object sender, EventArgs e)
         {
             selectPointer = ListViewWiki.FocusedItem.Index;
             DisplayEntry(selectPointer);
         }
+        // Criteria 9.9 Part 1 B
         private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ListViewWiki.SelectedIndices.Count > 0)
@@ -373,7 +384,7 @@ namespace Wiki_Prototype
             TextBoxName.Focus();
             selectPointer = -1;
         }
-
+        // Criteria 9.4
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
             if (selectPointer >= 0) // If an item is actually selected to delete
@@ -455,12 +466,12 @@ namespace Wiki_Prototype
                 e.SuppressKeyPress = true;
             }
         }
-
+        // Criteria 9.10 Part 1
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             SaveFile();
         }
-
+        // Criteria 9.11 Part 1
         private void ButtonLoad_Click(object sender, EventArgs e)
         {
             OpenFile();
