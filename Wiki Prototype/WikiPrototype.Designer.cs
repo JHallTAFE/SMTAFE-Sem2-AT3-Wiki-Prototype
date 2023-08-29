@@ -84,7 +84,7 @@
             TextBoxSearch.Name = "TextBoxSearch";
             TextBoxSearch.Size = new Size(143, 23);
             TextBoxSearch.TabIndex = 4;
-            ToolTip.SetToolTip(TextBoxSearch, "Search term to search the records with.");
+            ToolTip.SetToolTip(TextBoxSearch, "Search term to search the records with. Will sort the records alphabetically when a search is conducted.");
             TextBoxSearch.KeyDown += TextBoxSearch_KeyDown;
             // 
             // ButtonSearch

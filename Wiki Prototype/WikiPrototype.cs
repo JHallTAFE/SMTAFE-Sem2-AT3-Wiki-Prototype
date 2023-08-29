@@ -192,19 +192,35 @@ namespace Wiki_Prototype
         /// <returns>The index of the first matching wiki entry found, or -1 if no entry matches the search term.</returns>
         private int SearchWiki(string searchTerm)
         {
+            BubbleSort();
             if (string.IsNullOrWhiteSpace(searchTerm)) // If there's nothing to search for.
             {
                 return -1;
             }
-            for (var i = 0; i < wikiPointer; i++)
-            // Search record array for a name matching the search term, case-insensitive. Stop at first result.
+
+            int low = 0;
+            int high = wikiPointer - 1;
+
+            while (low <= high)
             {
-                if (String.Equals(searchTerm, recordArray[i, 0], StringComparison.OrdinalIgnoreCase))
+                int mid = low + (high - low) / 2;
+                int comparison = String.Compare(searchTerm, recordArray[mid, 0], StringComparison.OrdinalIgnoreCase);
+
+                if (comparison == 0)
                 {
-                    StatusBar.Text = "Entry " + recordArray[i, 0] + " found at position " + (i + 1) + "!";
-                    return i;
+                    StatusBar.Text = "Entry " + recordArray[mid, 0] + " found at position " + (mid + 1) + "!";
+                    return mid;
+                }
+                else if (comparison < 0)
+                {
+                    high = mid - 1;
+                }
+                else
+                {
+                    low = mid + 1;
                 }
             }
+
             StatusBar.Text = "No results matching " + searchTerm + " found!";
             return -1;
         }
