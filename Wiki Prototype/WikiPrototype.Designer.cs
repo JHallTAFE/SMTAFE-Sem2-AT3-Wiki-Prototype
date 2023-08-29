@@ -46,6 +46,7 @@
             ButtonAdd = new Button();
             ButtonEdit = new Button();
             ButtonDelete = new Button();
+            CheckBoxTitleCase = new CheckBox();
             StatusStrip = new StatusStrip();
             StatusBar = new ToolStripStatusLabel();
             LabelName = new Label();
@@ -177,7 +178,7 @@
             ButtonSort.Size = new Size(75, 23);
             ButtonSort.TabIndex = 19;
             ButtonSort.Text = "Sort";
-            ToolTip.SetToolTip(ButtonSort, "Sort the records.");
+            ToolTip.SetToolTip(ButtonSort, "Sort the records by alphabetical order of name.");
             ButtonSort.UseVisualStyleBackColor = true;
             ButtonSort.Click += ButtonSort_Click;
             // 
@@ -213,6 +214,19 @@
             ToolTip.SetToolTip(ButtonDelete, "Deletes the selected entry from the records.");
             ButtonDelete.UseVisualStyleBackColor = true;
             ButtonDelete.Click += ButtonDelete_Click;
+            // 
+            // CheckBoxTitleCase
+            // 
+            CheckBoxTitleCase.AutoSize = true;
+            CheckBoxTitleCase.Checked = true;
+            CheckBoxTitleCase.CheckState = CheckState.Checked;
+            CheckBoxTitleCase.Location = new Point(12, 288);
+            CheckBoxTitleCase.Name = "CheckBoxTitleCase";
+            CheckBoxTitleCase.Size = new Size(105, 19);
+            CheckBoxTitleCase.TabIndex = 20;
+            CheckBoxTitleCase.Text = "Auto Title Case";
+            ToolTip.SetToolTip(CheckBoxTitleCase, "Automatically changes submitted entries to Title Case.");
+            CheckBoxTitleCase.UseVisualStyleBackColor = true;
             // 
             // StatusStrip
             // 
@@ -270,6 +284,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(672, 348);
+            Controls.Add(CheckBoxTitleCase);
             Controls.Add(ButtonSort);
             Controls.Add(ButtonDemo);
             Controls.Add(ListViewWiki);
@@ -325,5 +340,6 @@
         private ToolStripStatusLabel StatusBar;
         private Button ButtonDemo;
         private Button ButtonSort;
+        private CheckBox CheckBoxTitleCase;
     }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 
 namespace Wiki_Prototype
 {
@@ -335,10 +336,21 @@ namespace Wiki_Prototype
         {
             if (wikiPointer < recordArray.GetLength(0))
             {
-                recordArray[wikiPointer, 0] = TextBoxName.Text;
-                recordArray[wikiPointer, 1] = TextBoxCategory.Text;
-                recordArray[wikiPointer, 2] = TextBoxStructure.Text;
-                recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
+                if (CheckBoxTitleCase.Checked)
+                {
+                    TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+                    recordArray[wikiPointer, 0] = ti.ToTitleCase(TextBoxName.Text);
+                    recordArray[wikiPointer, 1] = ti.ToTitleCase(TextBoxCategory.Text);
+                    recordArray[wikiPointer, 2] = ti.ToTitleCase(TextBoxStructure.Text);
+                    recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
+                }
+                else
+                {
+                    recordArray[wikiPointer, 0] = TextBoxName.Text;
+                    recordArray[wikiPointer, 1] = TextBoxCategory.Text;
+                    recordArray[wikiPointer, 2] = TextBoxStructure.Text;
+                    recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
+                }
                 wikiPointer++;
                 DisplayWiki();
                 ClearBoxes();
@@ -354,10 +366,21 @@ namespace Wiki_Prototype
         {
             if (selectPointer >= 0) // If an item is selected from the ListView.
             {
-                recordArray[selectPointer, 0] = TextBoxName.Text;
-                recordArray[selectPointer, 1] = TextBoxCategory.Text;
-                recordArray[selectPointer, 2] = TextBoxStructure.Text;
-                recordArray[selectPointer, 3] = TextBoxDefinition.Text;
+                if (CheckBoxTitleCase.Checked)
+                {
+                    TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+                    recordArray[selectPointer, 0] = ti.ToTitleCase(TextBoxName.Text);
+                    recordArray[selectPointer, 1] = ti.ToTitleCase(TextBoxCategory.Text);
+                    recordArray[selectPointer, 2] = ti.ToTitleCase(TextBoxStructure.Text);
+                    recordArray[selectPointer, 3] = TextBoxDefinition.Text;
+                }
+                else
+                {
+                    recordArray[selectPointer, 0] = TextBoxName.Text;
+                    recordArray[selectPointer, 1] = TextBoxCategory.Text;
+                    recordArray[selectPointer, 2] = TextBoxStructure.Text;
+                    recordArray[selectPointer, 3] = TextBoxDefinition.Text;
+                }
                 DisplayWiki();
             }
             else
