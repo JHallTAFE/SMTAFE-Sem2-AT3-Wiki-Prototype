@@ -548,5 +548,12 @@ namespace Wiki_Prototype
         {
             OpenFile();
         }
+
+        private void ListViewWiki_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            // Prevents resizing of the columns.
+            e.Cancel = true;
+            e.NewWidth = ListViewWiki.Columns[e.ColumnIndex].Width;
+        }
     }
 }

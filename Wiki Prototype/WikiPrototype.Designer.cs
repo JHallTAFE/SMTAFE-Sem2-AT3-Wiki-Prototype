@@ -146,6 +146,7 @@
             ToolTip.SetToolTip(ListViewWiki, "List of records.");
             ListViewWiki.UseCompatibleStateImageBehavior = false;
             ListViewWiki.View = View.Details;
+            ListViewWiki.ColumnWidthChanging += ListViewWiki_ColumnWidthChanging;
             ListViewWiki.SelectedIndexChanged += ListViewWiki_SelectedIndexChanged;
             ListViewWiki.Click += ListViewWiki_Click;
             ListViewWiki.MouseDoubleClick += ListViewWiki_MouseDoubleClick;
