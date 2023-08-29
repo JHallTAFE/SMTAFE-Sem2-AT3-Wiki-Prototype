@@ -176,6 +176,7 @@ namespace Wiki_Prototype
                     }
                 }
                 DisplayWiki();
+                StatusBar.Text = "Sorted!";
             }
             else // There's 0 or 1 entries.
             {
@@ -231,7 +232,7 @@ namespace Wiki_Prototype
                         try
                         {
                             // Writing to the file given by the user, each string from the record array at a time.
-                            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+                            using (BinaryWriter bw = new BinaryWriter(new FileStream(fileName, FileMode.Create)))
                             {
                                 for (var i = 0; i < recordArray.GetLength(0); i++)
                                 {
@@ -283,9 +284,10 @@ namespace Wiki_Prototype
                         }
                         try
                         {
-                            using (BinaryReader br = new BinaryReader(File.Open(fileName, FileMode.Open)))
+                            using (BinaryReader br = new BinaryReader(new FileStream(fileName, FileMode.Open)))
                             {
                                 var i = 0;
+                                wikiPointer = 0;
                                 while (br.BaseStream.Position < br.BaseStream.Length) // From the start until EOF, for each row
                                 {
                                     try
@@ -295,6 +297,7 @@ namespace Wiki_Prototype
                                             recordArray[i, j] = br.ReadString(); // Read file piece as a string
                                         }
                                         i++;
+                                        wikiPointer++;
                                     }
                                     catch (Exception)
                                     {
