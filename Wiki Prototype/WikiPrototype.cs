@@ -105,12 +105,12 @@ namespace Wiki_Prototype
             {
                 for (var j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row
                 {
-                    for (var k = 0; k < 4; k++) // For each element in the row
+                    for (var k = 0; k < colSize; k++) // For each element in the row
                     {
                         recordArray[j, k] = recordArray[j + 1, k]; // Replace the given row with the next row
                     }
                 }
-                for (var j = 0; j < 4; j++)
+                for (var j = 0; j < colSize; j++)
                 {
                     recordArray[wikiPointer - 1, j] = "~"; // Fill the last row (now duplicated) with empty results
                 }
@@ -133,7 +133,7 @@ namespace Wiki_Prototype
             if (entry1 >= 0 && entry1 < wikiPointer && entry2 >= 0 && entry2 < wikiPointer) //If the given values are filled within the array
             {
                 string[] tempEntry = { recordArray[entry1, 0], recordArray[entry1, 1], recordArray[entry1, 2], recordArray[entry1, 3] };
-                for (var i = 0; i < 4; i++)
+                for (var i = 0; i < colSize; i++)
                 {
                     recordArray[entry1, i] = recordArray[entry2, i];
                     recordArray[entry2, i] = tempEntry[i];
@@ -263,7 +263,7 @@ namespace Wiki_Prototype
                                 {
                                     try
                                     {
-                                        for (var j = 0; j < 4; j++)
+                                        for (var j = 0; j < colSize; j++)
                                         {
                                             recordArray[i, j] = br.ReadString();
                                         }
