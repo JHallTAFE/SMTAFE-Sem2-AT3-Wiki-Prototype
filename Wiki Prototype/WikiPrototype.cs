@@ -195,28 +195,46 @@ namespace Wiki_Prototype
         /// </summary>
         private void SaveFile()
         {
-            using (SaveFileDialog saveFile = new SaveFileDialog())
+            try
             {
-                saveFile.Title = "Select a file to save to";
-                saveFile.Filter = "Binary Files|*.dat";
-                saveFile.InitialDirectory = lastDirectory;
-                saveFile.FileName = defaultFileName;
-                if (saveFile.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog saveFile = new SaveFileDialog())
                 {
-                    string fileName = saveFile.FileName;
-                    lastDirectory = Path.GetDirectoryName(fileName);
-                    using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+                    saveFile.Title = "Select a file to save to";
+                    saveFile.Filter = "Binary Files|*.dat";
+                    saveFile.InitialDirectory = lastDirectory;
+                    saveFile.FileName = defaultFileName;
+                    if (saveFile.ShowDialog() == DialogResult.OK)
                     {
-                        for (var i = 0; i < recordArray.GetLength(0); i++)
+                        string fileName = saveFile.FileName;
+                        lastDirectory = Path.GetDirectoryName(fileName);
+                        try
                         {
-                            for (var j = 0; j < recordArray.GetLength(1); j++)
+                            using (BinaryWriter bw = new BinaryWriter(File.Open(fileName, FileMode.Create)))
                             {
-                                bw.Write(recordArray[i, j]);
+                                for (var i = 0; i < recordArray.GetLength(0); i++)
+                                {
+                                    for (var j = 0; j < recordArray.GetLength(1); j++)
+                                    {
+                                        bw.Write(recordArray[i, j]);
+                                    }
+                                }
+                                StatusBar.Text = "Successfully saved to " + fileName;
                             }
                         }
-                        StatusBar.Text = "Successfully saved to " + fileName;
+                        catch (UnauthorizedAccessException)
+                        {
+                            StatusBar.Text = "Access to the file " + fileName + "is unauthorised.";
+                        }
+                        catch (IOException e)
+                        {
+                            StatusBar.Text = "An error occurred during I/O: " + e.Message;
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                StatusBar.Text = "An error occured while trying to save the file.";
             }
         }
         /// <summary>
@@ -224,40 +242,62 @@ namespace Wiki_Prototype
         /// </summary>
         private void OpenFile()
         {
-            using (OpenFileDialog openFile = new OpenFileDialog())
+            try
             {
-                openFile.Title = "Select a file to open";
-                openFile.Filter = "Binary Files|*.dat";
-                openFile.InitialDirectory = lastDirectory;
-                openFile.FileName = defaultFileName;
-                if (openFile.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFile = new OpenFileDialog())
                 {
-                    string fileName = openFile.FileName;
-                    lastDirectory = Path.GetDirectoryName(fileName);
-                    using (BinaryReader br = new BinaryReader(File.Open(fileName, FileMode.Open)))
+                    openFile.Title = "Select a file to open";
+                    openFile.Filter = "Binary Files|*.dat";
+                    openFile.InitialDirectory = lastDirectory;
+                    openFile.FileName = defaultFileName;
+                    if (openFile.ShowDialog() == DialogResult.OK)
                     {
-                        var i = 0;
-                        while (br.BaseStream.Position < br.BaseStream.Length)
+                        string fileName = openFile.FileName;
+                        lastDirectory = Path.GetDirectoryName(fileName);
+                        try
                         {
-                            try
+                            using (BinaryReader br = new BinaryReader(File.Open(fileName, FileMode.Open)))
                             {
-                                for (var j = 0; j < 4; j++)
+                                var i = 0;
+                                while (br.BaseStream.Position < br.BaseStream.Length)
                                 {
-                                    recordArray[i, j] = br.ReadString();
+                                    try
+                                    {
+                                        for (var j = 0; j < 4; j++)
+                                        {
+                                            recordArray[i, j] = br.ReadString();
+                                        }
+                                        i++;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        StatusBar.Text = "Cannot read from file.";
+                                        return;
+                                    }
+                                    DisplayWiki();
                                 }
-                                i++;
+                                ButtonSave.Enabled = true;
+                                StatusBar.Text = "Successfully opened " + fileName;
                             }
-                            catch (Exception)
-                            {
-                                StatusBar.Text = "Cannot read from file.";
-                                return;
-                            }
-                            DisplayWiki();
                         }
-                        ButtonSave.Enabled = true;
-                        StatusBar.Text = "Successfully opened " + fileName;
+                        catch (FileNotFoundException)
+                        {
+                            StatusBar.Text = "File " + fileName + " not found!";
+                        }
+                        catch (DirectoryNotFoundException e)
+                        {
+                            StatusBar.Text = e.Message;
+                        }
+                        catch (IOException e)
+                        {
+                            StatusBar.Text = "An error occurred during I/O: " + e.Message;
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                StatusBar.Text = "An error occured while trying to open the file.";
             }
         }
         private void ButtonAdd_Click(object sender, EventArgs e)

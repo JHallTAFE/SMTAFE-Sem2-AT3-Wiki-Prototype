@@ -71,39 +71,43 @@
             // 
             // ButtonLoad
             // 
-            ButtonLoad.Location = new Point(355, 251);
+            ButtonLoad.Location = new Point(355, 302);
             ButtonLoad.Name = "ButtonLoad";
             ButtonLoad.Size = new Size(75, 23);
             ButtonLoad.TabIndex = 2;
             ButtonLoad.Text = "Load";
+            ToolTip.SetToolTip(ButtonLoad, "Load a file to pull record from.");
             ButtonLoad.UseVisualStyleBackColor = true;
             ButtonLoad.Click += ButtonLoad_Click;
             // 
             // ButtonSave
             // 
-            ButtonSave.Location = new Point(436, 251);
+            ButtonSave.Location = new Point(436, 302);
             ButtonSave.Name = "ButtonSave";
             ButtonSave.Size = new Size(75, 23);
             ButtonSave.TabIndex = 3;
             ButtonSave.Text = "Save";
+            ToolTip.SetToolTip(ButtonSave, "Save records to a file.");
             ButtonSave.UseVisualStyleBackColor = true;
             ButtonSave.Click += ButtonSave_Click;
             // 
             // TextBoxSearch
             // 
-            TextBoxSearch.Location = new Point(355, 12);
+            TextBoxSearch.Location = new Point(423, 13);
             TextBoxSearch.Name = "TextBoxSearch";
-            TextBoxSearch.Size = new Size(149, 23);
+            TextBoxSearch.Size = new Size(143, 23);
             TextBoxSearch.TabIndex = 4;
+            ToolTip.SetToolTip(TextBoxSearch, "Search term to search the wiki with.");
             TextBoxSearch.KeyDown += TextBoxSearch_KeyDown;
             // 
             // ButtonSearch
             // 
-            ButtonSearch.Location = new Point(510, 11);
+            ButtonSearch.Location = new Point(355, 12);
             ButtonSearch.Name = "ButtonSearch";
             ButtonSearch.Size = new Size(62, 23);
             ButtonSearch.TabIndex = 5;
             ButtonSearch.Text = "Search";
+            ToolTip.SetToolTip(ButtonSearch, "Search the wiki for the given entry.");
             ButtonSearch.UseVisualStyleBackColor = true;
             ButtonSearch.Click += ButtonSearch_Click;
             // 
@@ -113,6 +117,7 @@
             TextBoxName.Name = "TextBoxName";
             TextBoxName.Size = new Size(100, 23);
             TextBoxName.TabIndex = 6;
+            ToolTip.SetToolTip(TextBoxName, "Name of the record.");
             TextBoxName.MouseDoubleClick += TextBoxName_MouseDoubleClick;
             // 
             // TextBoxCategory
@@ -121,6 +126,7 @@
             TextBoxCategory.Name = "TextBoxCategory";
             TextBoxCategory.Size = new Size(100, 23);
             TextBoxCategory.TabIndex = 7;
+            ToolTip.SetToolTip(TextBoxCategory, "The category the record falls under.");
             // 
             // TextBoxStructure
             // 
@@ -128,6 +134,7 @@
             TextBoxStructure.Name = "TextBoxStructure";
             TextBoxStructure.Size = new Size(100, 23);
             TextBoxStructure.TabIndex = 8;
+            ToolTip.SetToolTip(TextBoxStructure, "The type of structure the record is.");
             // 
             // LabelName
             // 
@@ -161,8 +168,9 @@
             TextBoxDefinition.Location = new Point(12, 116);
             TextBoxDefinition.Multiline = true;
             TextBoxDefinition.Name = "TextBoxDefinition";
-            TextBoxDefinition.Size = new Size(296, 129);
+            TextBoxDefinition.Size = new Size(296, 166);
             TextBoxDefinition.TabIndex = 12;
+            ToolTip.SetToolTip(TextBoxDefinition, "The definition of the record.");
             // 
             // LabelDefinition
             // 
@@ -207,12 +215,14 @@
             // 
             ListViewWiki.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnCategory });
             ListViewWiki.FullRowSelect = true;
+            ListViewWiki.GridLines = true;
             ListViewWiki.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            ListViewWiki.Location = new Point(355, 41);
+            ListViewWiki.Location = new Point(355, 40);
             ListViewWiki.MultiSelect = false;
             ListViewWiki.Name = "ListViewWiki";
-            ListViewWiki.Size = new Size(286, 204);
+            ListViewWiki.Size = new Size(286, 256);
             ListViewWiki.TabIndex = 17;
+            ToolTip.SetToolTip(ListViewWiki, "List of entries in the wiki.");
             ListViewWiki.UseCompatibleStateImageBehavior = false;
             ListViewWiki.View = View.Details;
             ListViewWiki.SelectedIndexChanged += ListViewWiki_SelectedIndexChanged;
@@ -231,21 +241,23 @@
             // 
             // ButtonDemo
             // 
-            ButtonDemo.Location = new Point(566, 251);
+            ButtonDemo.Location = new Point(274, 302);
             ButtonDemo.Name = "ButtonDemo";
             ButtonDemo.Size = new Size(75, 23);
             ButtonDemo.TabIndex = 18;
             ButtonDemo.Text = "Demo";
+            ToolTip.SetToolTip(ButtonDemo, "Load in demo records.");
             ButtonDemo.UseVisualStyleBackColor = true;
             ButtonDemo.Click += ButtonDemo_Click;
             // 
             // ButtonSort
             // 
-            ButtonSort.Location = new Point(566, 280);
+            ButtonSort.Location = new Point(566, 302);
             ButtonSort.Name = "ButtonSort";
             ButtonSort.Size = new Size(75, 23);
             ButtonSort.TabIndex = 19;
             ButtonSort.Text = "Sort";
+            ToolTip.SetToolTip(ButtonSort, "Sort the records.");
             ButtonSort.UseVisualStyleBackColor = true;
             ButtonSort.Click += ButtonSort_Click;
             // 
