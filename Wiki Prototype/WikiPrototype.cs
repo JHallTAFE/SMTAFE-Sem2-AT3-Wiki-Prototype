@@ -331,9 +331,24 @@ namespace Wiki_Prototype
                 StatusBar.Text = "An error occured while trying to open the file.";
             }
         }
+        /// <summary>
+        /// Checks if all four of the fields Name Category Structure and Definition aren't null or whitespace.
+        /// </summary>
+        /// <returns>true if all four fields have something in them, false otherwise.</returns>
+        private bool AllFull()
+        {
+            return !(String.IsNullOrWhiteSpace(TextBoxName.Text) || String.IsNullOrWhiteSpace(TextBoxCategory.Text)
+                || String.IsNullOrWhiteSpace(TextBoxStructure.Text) || String.IsNullOrWhiteSpace(TextBoxDefinition.Text));
+        }
         // Criteria 9.2
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+
+            if (!AllFull()) // Abort the process if not all four boxes have something in them.
+            {
+                MessageBox.Show("Please fill all four boxes before adding an entry.", "Empty boxes found!");
+                return;
+            }
             if (wikiPointer < recordArray.GetLength(0))
             {
                 if (CheckBoxTitleCase.Checked)
@@ -351,6 +366,7 @@ namespace Wiki_Prototype
                     recordArray[wikiPointer, 2] = TextBoxStructure.Text;
                     recordArray[wikiPointer, 3] = TextBoxDefinition.Text;
                 }
+                StatusBar.Text = "Entry " + recordArray[wikiPointer, 0] + " was added!";
                 wikiPointer++;
                 DisplayWiki();
                 ClearBoxes();
@@ -364,8 +380,14 @@ namespace Wiki_Prototype
         // Criteria 9.3
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
+            if (!AllFull()) // Abort the process if not all four boxes have something in them.
+            {
+                MessageBox.Show("Please fill all four boxes before editing an entry.", "Empty boxes found!");
+                return;
+            }
             if (selectPointer >= 0) // If an item is selected from the ListView.
             {
+                var oldName = recordArray[selectPointer, 0];
                 if (CheckBoxTitleCase.Checked)
                 {
                     TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
@@ -380,6 +402,14 @@ namespace Wiki_Prototype
                     recordArray[selectPointer, 1] = TextBoxCategory.Text;
                     recordArray[selectPointer, 2] = TextBoxStructure.Text;
                     recordArray[selectPointer, 3] = TextBoxDefinition.Text;
+                }
+                if (!oldName.Equals(recordArray[selectPointer, 0]))
+                {
+                    StatusBar.Text = "Entry " + oldName + " changed to " + recordArray[selectPointer, 0] + "!";
+                }
+                else
+                {
+                    StatusBar.Text = "Entry " + oldName + " updated!";
                 }
                 DisplayWiki();
             }
