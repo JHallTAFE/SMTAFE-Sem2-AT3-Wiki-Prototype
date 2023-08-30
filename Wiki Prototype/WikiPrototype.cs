@@ -46,11 +46,7 @@ namespace Wiki_Prototype
             {
                 ButtonDemo.Visible = false;
             }
-            for (var i = 0; i < rowSize; i++)
-            {
-                for (var j = 0; j < colSize; j++)
-                    recordArray[i, j] = "~"; // ~ acts as a "blank" entry to fill the array with.
-            }
+            InitRecords();
             DisplayWiki();
         }
 
@@ -321,8 +317,11 @@ namespace Wiki_Prototype
                                         {
                                             recordArray[i, j] = br.ReadString(); // Read file piece as a string
                                         }
+                                        if (recordArray[i, 0] != "~")
+                                        {
+                                            wikiPointer++;
+                                        }
                                         i++;
-                                        wikiPointer++;
                                     }
                                     catch (Exception)
                                     {
@@ -363,6 +362,14 @@ namespace Wiki_Prototype
         {
             return !(String.IsNullOrWhiteSpace(TextBoxName.Text) || String.IsNullOrWhiteSpace(TextBoxCategory.Text)
                 || String.IsNullOrWhiteSpace(TextBoxStructure.Text) || String.IsNullOrWhiteSpace(TextBoxDefinition.Text));
+        }
+        private void InitRecords()
+        {
+            for (var i = 0; i < rowSize; i++)
+            {
+                for (var j = 0; j < colSize; j++)
+                    recordArray[i, j] = "~"; // ~ acts as a "blank" entry to fill the array with.
+            }
         }
         // Criteria 9.2
         private void ButtonAdd_Click(object sender, EventArgs e)
