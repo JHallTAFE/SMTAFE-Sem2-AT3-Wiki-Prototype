@@ -1,6 +1,12 @@
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 
+/*
+ * J. Hall
+ * 30074376
+ * 30/08/2023
+ * Assessment Task One
+ */
 namespace Wiki_Prototype
 {
     public partial class WikiPrototype : Form
@@ -106,7 +112,8 @@ namespace Wiki_Prototype
         /// <param name="i">The row in the array to delete</param>
         private void DeleteEntry(int i)
         {
-            if (MessageBox.Show("Do you wish to delete the entry " + recordArray[i, 0] + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            string entryToDelete = recordArray[i, 0];
+            if (MessageBox.Show("Do you wish to delete the entry " + entryToDelete + " from the records?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             // If the user says Yes.
             {
                 for (var j = i; j < wikiPointer - 1; j++) // From the given row to the 2nd last filled row.
@@ -124,6 +131,7 @@ namespace Wiki_Prototype
                 wikiPointer--; // Shift pointer back up the list.
                 DisplayWiki();
                 ClearBoxes();
+                StatusBar.Text = "Entry " + entryToDelete + " has been removed!";
                 // If the records are now "empty", disable the save button as there's nothing to save.
                 if (wikiPointer == 0)
                 {
@@ -198,8 +206,8 @@ namespace Wiki_Prototype
                 return -1;
             }
 
-            int low = 0;
-            int high = wikiPointer - 1;
+            var low = 0;
+            var high = wikiPointer - 1;
 
             while (low <= high)
             {
@@ -249,7 +257,7 @@ namespace Wiki_Prototype
                         try
                         {
                             // Writing to the file given by the user, each string from the record array at a time.
-                            using (BinaryWriter bw = new BinaryWriter(new FileStream(fileName, FileMode.Create)))
+                            using (var bw = new BinaryWriter(new FileStream(fileName, FileMode.Create)))
                             {
                                 for (var i = 0; i < recordArray.GetLength(0); i++)
                                 {
@@ -285,7 +293,7 @@ namespace Wiki_Prototype
         {
             try
             {
-                using (OpenFileDialog openFile = new OpenFileDialog())
+                using (var openFile = new OpenFileDialog())
                 {
                     // Initialising open dialogue properties.
                     openFile.Title = "Select a file to open";
@@ -301,7 +309,7 @@ namespace Wiki_Prototype
                         }
                         try
                         {
-                            using (BinaryReader br = new BinaryReader(new FileStream(fileName, FileMode.Open)))
+                            using (var br = new BinaryReader(new FileStream(fileName, FileMode.Open)))
                             {
                                 var i = 0;
                                 wikiPointer = 0;
@@ -403,7 +411,7 @@ namespace Wiki_Prototype
             }
             if (selectPointer >= 0) // If an item is selected from the ListView.
             {
-                var oldName = recordArray[selectPointer, 0];
+                string oldName = recordArray[selectPointer, 0];
                 if (CheckBoxTitleCase.Checked)
                 {
                     TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
@@ -519,11 +527,11 @@ namespace Wiki_Prototype
 
         private void ButtonSearch_Click(object sender, EventArgs e)
         {
-            var search = SearchWiki(TextBoxSearch.Text);
-            if (search > 0) // If the search is successful
+            int searchResult = SearchWiki(TextBoxSearch.Text);
+            if (searchResult > 0) // If the search is successful
             {
-                DisplayEntry(search);
-                this.ListViewWiki.Items[search].Selected = true;
+                DisplayEntry(searchResult);
+                this.ListViewWiki.Items[searchResult].Selected = true;
             }
             // Search result feedback is handled by the SearchWiki method.
             TextBoxSearch.Clear();
